@@ -14,15 +14,16 @@
         }
 
         button {
-            background: #ADD8E6;
+            background: #d3d3d3;
             border: 1px solid black;
             display: block;
             margin: auto;
             padding: 0.5rem 2rem;
+            cursor: pointer;
         }
 
-        button:hover {
-            background: #ffffff;
+        button:active {
+            background: #b0b0b0;
         }
     </style>
 </head>
@@ -97,18 +98,16 @@
         player = 'X';
     }
 
-    function start() {
-        init();
-        drawBoard();
-        getCanvas().addEventListener("click", canvasClicked);
-    }
-
     function cleanBoard() {
         init();
         drawBoard();
     }
 
-    start();
+    window.onload = function() {
+        init();
+        drawBoard();
+        getCanvas().addEventListener("click", canvasClicked);
+    }
 </script>
 </body>
 </html>

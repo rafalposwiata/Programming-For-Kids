@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Snake</title>
+    <style>
+        h1 {
+            text-align: center;
+        }
+
+        canvas {
+            display: block;
+            margin: 2rem auto;
+        }
+    </style>
+</head>
+<body>
+<h1>Snake</h1>
+<canvas id="canvas" width="400" height="400"></canvas>
+<script>
+    var canvas;
+    var ctx;
+    var point = {x: 10, y: 10};
+    var gs = tc = 20;
+    var ax = ay = 15;
+    var xv = yv = 0;
+    var trail = [];
+    var tail = 5;
+
+    function draw() {
+        point.x += xv;
+        point.y += yv;
+        if (point.x < 0) {
+            point.x = tc - 1;
+        }
+        if (point.x > tc - 1) {
+            point.x = 0;
+        }
+        if (point.y < 0) {
+            point.y = tc - 1;
+        }
+        if (point.y > tc - 1) {
+            point.y = 0;
+        }
+
+        drawBackground();
+        drawSnake();
+        drawApple();
+    }
+
+    function drawBackground() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawSnake() {
+        ctx.fillStyle = "green";
+
+        trail.push({x: point.x, y: point.y});
+        while (trail.length > tail) {
+            trail.shift();
+        }
+
+        for (var i = 0; i < trail.length - 1; i++) {
+            ctx.fillRect(trail[i].x * gs, trail[i].y * gs, gs - 2, gs - 2);
+            if (trail[i].x == point.x && trail[i].y == point.y) {
+                tail = 5;
+            }
+        }
+    }
+
+    function drawApple() {
+        if (ax == point.x && ay == point.y) {
+            tail++;
+            ax = Math.floor(Math.random() * tc);
+            ay = Math.floor(Math.random() * tc);
+        }
+        ctx.fillStyle = "red";
+        ctx.fillRect(ax * gs, ay * gs, gs - 2, gs - 2);
+    }
+
+    function keyPush(evt) {
+        switch (evt.keyCode) {
+            case 37:
+                xv = -1;
+                yv = 0;
+                break;
+            case 38:
+                xv = 0;
+                yv = -1;
+                break;
+            case 39:
+                xv = 1;
+                yv = 0;
+                break;
+            case 40:
+                xv = 0;
+                yv = 1;
+                break;
+        }
+    }
+
+    window.onload = function () {
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+        document.addEventListener("keydown", keyPush);
+        setInterval(draw, 100);
+    }
+</script>
+</body>
+</html>
