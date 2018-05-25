@@ -7,3 +7,8 @@
 - https://www.codemoji.com/
 - https://www.tynker.com/
 - https://www.playcodemonkey.com/
+
+### PyGame
+
+#### Installation:
+pip install pygame
